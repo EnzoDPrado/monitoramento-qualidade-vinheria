@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven: 'Maven 3'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -27,10 +31,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Realizando deploy do monitoramento-qualidade...'
-                // Para o container antigo se estiver rodando
                 sh 'docker stop monitoramento-qualidade || true'
                 sh 'docker rm monitoramento-qualidade || true'
-                // Sobe o novo container
                 sh '''
                     docker run -d \
                         --name monitoramento-qualidade \
